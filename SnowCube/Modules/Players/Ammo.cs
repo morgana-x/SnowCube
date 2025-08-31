@@ -48,7 +48,7 @@ namespace SnowCube.Modules.Players
         {
             if (button != MouseButton.Right || action == MouseAction.Released) return;
             if (!Util.IsPVPLevel(p.level)) return;
-
+            if (Block.ToRaw(p.GetHeldBlock()) != (ushort)SnowCube.ItemID.Snowball) return;
             if (Util.IsNoAmmoLevel(p.level)) return;
 
             if (Ammo.GetAmmo(p) >= Ammo.MaxAmmo) return;

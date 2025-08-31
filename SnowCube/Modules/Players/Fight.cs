@@ -27,7 +27,10 @@ namespace SnowCube.Modules.Players
 
             if (!Util.IsPVPLevel(p.level)) return;
 
+            if ( Block.ToRaw(p.GetHeldBlock()) != (ushort)SnowCube.ItemID.Snowball) return;
+
             if (!Util.IsNoAmmoLevel(p.level) && Ammo.GetAmmo(p) <= 0) return;
+
 
             if (p.Extras.TryGet("snowcooldown", out object expire) && DateTime.Now < (DateTime)expire)
                 return;

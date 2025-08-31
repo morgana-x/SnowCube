@@ -9,6 +9,13 @@ namespace SnowCube
         public override string name => "snowcube";
 
         SchedulerTask task;
+
+
+        public enum ItemID // Temp its 3 am
+        {
+            Snowball = 466
+        }
+
         public override void Load(bool auto)
         {
             Modules.World.Effect.Load();
@@ -18,6 +25,10 @@ namespace SnowCube
             Modules.Players.Health.Load();
             Modules.Players.Hud.Load();
             task = Server.MainScheduler.QueueRepeat(Tick, null, System.TimeSpan.FromMilliseconds(50));
+
+
+            var bd = new BlockDefinition() { RawID = (ushort)ItemID.Snowball, MaxX = 12, MaxY = 12, MaxZ = 12, MinX=6, MinY=6, MinZ=6, BackTex=50, BottomTex=50, FrontTex=50, TopTex=50, LeftTex=50, RightTex=50, FallBack=79, Name="Snowball", BlockDraw=1, Shape=16 };
+            BlockDefinition.Add(bd, BlockDefinition.GlobalDefs, null);
         }
 
         public override void Unload(bool auto)
