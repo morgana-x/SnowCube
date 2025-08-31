@@ -78,7 +78,7 @@ namespace SnowCube.Modules.World
 
             AddEffect(new DefinedEffect((byte)Effects.Snowball_Trail, 255, 255, 255, 1f, 1, 3, 15, 0, 0, 10, 10) { BaseLifetime = 2f, Spread = 0.25f });
             AddEffect(new DefinedEffect((byte)Effects.Snowball_Ball, 255, 255, 255, 0f, 1, 1, 50, 5, 5, 10, 10) { Spread = 0f, BaseLifetime = 0.1f, LifetimeVariation=0f, SizeVariation=0f});
-            AddEffect(new DefinedEffect((byte)Effects.Snowball_Hit){ R=200, G=200, ParticleCount=5, SizeVariation=0.1f, Size=50, Spread = 0.4f, FrameCount=1, Gravity=4f, Speed=3f, BaseLifetime = 4f, LifetimeVariation = 0.5f });
+            AddEffect(new DefinedEffect((byte)Effects.Snowball_Hit){ R=255, G=255, ParticleCount=10, SizeVariation=0.2f, Size=25, Spread = 0.4f, FrameCount=1, Gravity=4f, Speed=3f, BaseLifetime = 4f, LifetimeVariation = 0.5f });
         }
 
         public static void Unload()

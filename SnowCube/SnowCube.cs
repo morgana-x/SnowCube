@@ -14,7 +14,7 @@ namespace SnowCube
             Modules.World.Effect.Load();
             Modules.Players.Fight.Load();
             Modules.Players.Ammo.Load();
-            Modules.Players.Build.Load();
+           // Modules.Players.Build.Load();
             Modules.Players.Health.Load();
             Modules.Players.Hud.Load();
             task = Server.MainScheduler.QueueRepeat(Tick, null, System.TimeSpan.FromMilliseconds(50));
@@ -27,7 +27,7 @@ namespace SnowCube
             Modules.World.Effect.Unload();
             Modules.Players.Fight.Unload();
             Modules.Players.Ammo.Unload();
-            Modules.Players.Build.Unload();
+          //  Modules.Players.Build.Unload();
             Modules.Players.Health.Unload();
             Modules.Players.Hud.Unload();
         }

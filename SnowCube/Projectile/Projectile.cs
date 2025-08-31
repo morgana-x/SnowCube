@@ -34,7 +34,7 @@ namespace SnowCube.Projectile
                             pair.Value.Remove(pair.Value[j]);
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
                         pair.Value[j].OnDestroy();
@@ -67,10 +67,10 @@ namespace SnowCube.Projectile
             Spawn(level, projectile);
         }
 
-        public static void Throw(Player p, Projectile projectile, ushort yaw, ushort pitch, float power=2.5f)
+        public static void Throw(Player p, Projectile projectile, ushort yaw, ushort pitch, float power = 2.5f)
         {
             var dir = DirUtils.GetDirVectorExt(yaw, pitch);
-            Throw(p.level, projectile, p.Pos.ToVec3F32() + (dir *1f) + new Vec3F32(0, 0.5f, 0), dir * power, p);
+            Throw(p.level, projectile, p.Pos.ToVec3F32() + dir * 1f + new Vec3F32(0, 0.5f, 0), dir * power, p);
         }
 
         public void Throw(Player p, ushort yaw, ushort pitch, float power = 2.5f)
