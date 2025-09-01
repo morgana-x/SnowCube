@@ -10,7 +10,7 @@ namespace SnowCube.Projectile
     {
         public static Dictionary<Level, List<Projectile>> Projectiles = new Dictionary<Level, List<Projectile>>();
 
-        public static void TickAll()
+        public static void TickAll(float curtime)
         {
             int i = 0;
             while (i < Projectiles.Count)
@@ -28,7 +28,7 @@ namespace SnowCube.Projectile
                 {
                     try
                     {
-                        if (pair.Value[j].Tick())
+                        if (pair.Value[j].Tick(curtime))
                         {
                             pair.Value[j].OnDestroy();
                             pair.Value.Remove(pair.Value[j]);
@@ -53,7 +53,8 @@ namespace SnowCube.Projectile
                 Projectiles.Add(level, new List<Projectile>());
 
             projectile.Level = level;
-            projectile.Expiration = DateTime.Now.AddSeconds(projectile.LifeTime);
+            projectile.Creation = DateTime.Now;
+            projectile.Expiration = projectile.Creation.AddSeconds(projectile.LifeTime);
 
             Projectiles[level].Add(projectile);
         }
@@ -70,7 +71,7 @@ namespace SnowCube.Projectile
         public static void Throw(Player p, Projectile projectile, ushort yaw, ushort pitch, float power = 2.5f)
         {
             var dir = DirUtils.GetDirVectorExt(yaw, pitch);
-            Throw(p.level, projectile, p.Pos.ToVec3F32() + dir * 1f + new Vec3F32(0, 0.5f, 0), dir * power, p);
+            Throw(p.level, projectile, p.Pos.ToVec3F32() + (dir * 0.5f) + new Vec3F32(0, 0.1f, 0), dir * power, p);
         }
 
         public void Throw(Player p, ushort yaw, ushort pitch, float power = 2.5f)
@@ -103,14 +104,14 @@ namespace SnowCube.Projectile
         public float Drag = 0.95f;
         public float Gravity = 1.5f;
 
-        public float Radius = 4f;
+        public float Radius = 1f;
 
         public bool destroy = false;
 
         public float LifeTime = 100;
 
         public DateTime Expiration;
-
+        public DateTime Creation;
         private ushort CollidedBlock()
         {
             var bp = BlockPos;
@@ -125,7 +126,7 @@ namespace SnowCube.Projectile
         {
             return Util.PlayersAt(Level, Pos, Radius);
         }
-        public virtual bool Tick()
+        public virtual bool Tick(float curtime)
         {
             if (destroy)
                 return true;
@@ -136,24 +137,28 @@ namespace SnowCube.Projectile
             if (Vel.Y > -Gravity)
                 Vel.Y -= 0.25f;
 
-            Pos += Vel;
-
-            if (Pos.Y < 0 || Pos.X < 0 || Pos.Z < 0)
-                return true;
-            if (Pos.X >= Level.Width || Pos.Z >= Level.Length)
-                return true;
-
-            var block = CollidedBlock();
-            var pl = CollidedPlayer();
-
-            if (block != 0 || pl != null)
+            for (int i = 0; i < 10; i++)
             {
-                if (pl != null)
-                    foreach (var p in CollidedPlayers())
-                        OnCollide(block, p);
-                else
-                    OnCollide(block, null);
-                return true;
+                Pos += (Vel*0.1f *curtime);
+
+                if (Pos.Y < 0 || Pos.X < 0 || Pos.Z < 0)
+                    return true;
+                if (Pos.X >= Level.Width || Pos.Z >= Level.Length)
+                    return true;
+
+                var block = CollidedBlock();
+                var pl = CollidedPlayer();
+
+                if (pl != null && DateTime.Now < Creation.AddMilliseconds(100) && pl == Thrower) pl = null;
+                if (block != 0 || pl != null)
+                {
+                    if (pl != null)
+                        foreach (var p in CollidedPlayers())
+                            OnCollide(block, p);
+                    else
+                        OnCollide(block, null);
+                    return true;
+                }
             }
 
             return false;

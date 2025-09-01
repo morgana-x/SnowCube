@@ -47,7 +47,7 @@ namespace SnowCube
 
         public static void Tick(SchedulerTask task)
         {
-            Projectile.Projectile.TickAll();
+            Projectile.Projectile.TickAll(0.50f);
         }
     }
 }

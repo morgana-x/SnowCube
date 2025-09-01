@@ -19,11 +19,11 @@ namespace SnowCube.Projectile
 
         }
 
-        public override bool Tick()
+        public override bool Tick(float curtime)
         {
             Effect.EmitEffect(Level, Effect.Effects.Snowball_Trail, Pos);
             Effect.EmitEffect(Level, Effect.Effects.Snowball_Ball, Pos);
-            return base.Tick();
+            return base.Tick(curtime);
         }
 
         public override void OnDestroy()
