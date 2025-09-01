@@ -53,7 +53,7 @@ namespace SnowCube.Modules.Players
         public static Dictionary<DamageType, DamageDataDeathMessage> DeathMessages = new Dictionary<DamageType, DamageDataDeathMessage>()
         {
             [DamageType.None] = new DamageDataDeathMessage("@v &ewas murdered by @k", "@v &egot bored of life", "@v &edied."),
-            [DamageType.Snowball] = new DamageDataDeathMessage(new string[] {"@v &egot &bsnowed &eby @k", "@k &egave @v &bbrain freeze", "@v &egot &bsmashed with snow &efrom @k"}, new string[] { "@v &cfailed to dodge their own snowball", "@v &efound out about gravity" }, new string[] { "@v &edied of &csnow exposure" }),
+            [DamageType.Snowball] = new DamageDataDeathMessage(new string[] {"@v &egot &bsnowed &eby @k", "@k &egave @v &bbrain freeze", "@v &baccepted snow to the face &efrom @k", "@v &egot &bsmashed with snow &efrom @k"}, new string[] { "@v &cfailed to dodge their own snowball", "@v &efound out about gravity" }, new string[] { "@v &edied of &csnow exposure" }),
             [DamageType.Fall] = new DamageDataDeathMessage(new string[] {"@v&e's legs were shattered by @k", "@v &cwas &c(russian)&e\"&9fell out window&e\" by @k"}, new string[] {"@v &elistened to the voices and jumped"}, new string[] {"@v&e's legs were &cshattered", "@v &ecouldn't break their fall"})
         };
 

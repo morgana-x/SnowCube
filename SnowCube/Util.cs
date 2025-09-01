@@ -10,21 +10,21 @@ namespace SnowCube
     {
         public static bool IsPVPLevel(Level level)
         {
-            return level.Config.MOTD.Contains("+snowball");
+            return level.Config.MOTD.Contains("+snowball") || level.Extras.GetBoolean("snowball");
         }
 
         public static bool IsNoAmmoLevel(Level level)
         {
-            return level.Config.MOTD.Contains("-ammo");
+            return level.Config.MOTD.Contains("-ammo") || level.Extras.GetBoolean("-ammo");
         }
 
         public static bool IsNoDamageLevel(Level level)
         {
-            return level.Config.MOTD.Contains("-damage");
+            return level.Config.MOTD.Contains("-damage") || level.Extras.GetBoolean("-damage");
         }
         public static bool CanBreakBlocks(Level level)
         {
-            return level.CanDelete && (!IsPVPLevel(level));
+            return level.CanDelete;// && (!IsPVPLevel(level));
         }
 
         public static Vec3U16 Round(Vec3F32 v)
