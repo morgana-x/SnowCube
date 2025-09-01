@@ -23,6 +23,7 @@ namespace SnowCube
             Modules.Players.Fight.Load();
             Modules.Players.Ammo.Load();
             Modules.Players.Loadout.Load();
+            Modules.Players.Hold.Load();
            // Modules.Players.Build.Load();
             Modules.Players.Health.Load();
             Modules.Players.Hud.Load();
@@ -42,7 +43,8 @@ namespace SnowCube
             Modules.Players.Loadout.Unload();
             Modules.Players.Fight.Unload();
             Modules.Players.Ammo.Unload();
-          //  Modules.Players.Build.Unload();
+            Modules.Players.Hold.Unload();
+            //  Modules.Players.Build.Unload();
             Modules.Players.Health.Unload();
             Modules.Players.Hud.Unload();
         }
