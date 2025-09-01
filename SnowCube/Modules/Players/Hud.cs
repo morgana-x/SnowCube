@@ -1,9 +1,4 @@
 ﻿using MCGalaxy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnowCube.Modules.Players
 {
@@ -45,7 +40,6 @@ namespace SnowCube.Modules.Players
 
         public static void HUD_Hint(MCGalaxy.Player pl)
         {
-            if (Util.IsNoAmmoLevel(pl.level)) return;
             var msg = "&bPunch &e - &fThrow &bPlace &e - &fPickup";
             pl.SendCpeMessage(MCGalaxy.CpeMessageType.Status1, msg);
         }
