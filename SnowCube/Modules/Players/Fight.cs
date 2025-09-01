@@ -1,5 +1,7 @@
 ﻿using MCGalaxy;
 using MCGalaxy.Events.PlayerEvents;
+using SnowCube.Events;
+using SnowCube.Modules.World;
 using System;
 
 namespace SnowCube.Modules.Players
@@ -30,15 +32,22 @@ namespace SnowCube.Modules.Players
 
             if (!Util.IsNoAmmoLevel(p.level) && Ammo.GetAmmo(p) <= 0) return;
 
-
             if (p.Extras.TryGet("snowcooldown", out object expire) && DateTime.Now < (DateTime)expire)
                 return;
+
+            var snowball = new Projectile.Snowball();
+            bool cancel = false;
+            PlayerEvents.PlayerThrowingSnowballEvent.Call(p, snowball, ref cancel);
+            if (cancel) return;
+
             p.Extras["snowcooldown"] = DateTime.Now.AddSeconds(0.25f);
+
 
             if (!Util.IsNoAmmoLevel(p.level))
                 Ammo.AddAmmo(p, -1);
 
-            new Projectile.Snowball().Throw(p, yaw, pitch, 2.5f);
+            Sound.EmitBlockSound(p, 0, MCGalaxy.Blocks.SoundType.Snow, 50, 100);
+            snowball.Throw(p, yaw, pitch, 2.5f);
         }
 
 

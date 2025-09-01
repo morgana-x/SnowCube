@@ -19,6 +19,7 @@ namespace SnowCube
         public override void Load(bool auto)
         {
             Modules.World.Effect.Load();
+            Modules.World.Sound.Load();
             Modules.Players.Fight.Load();
             Modules.Players.Ammo.Load();
            // Modules.Players.Build.Load();
@@ -36,6 +37,7 @@ namespace SnowCube
             Server.MainScheduler.Cancel(task);
 
             Modules.World.Effect.Unload();
+            Modules.World.Sound.Unload();
             Modules.Players.Fight.Unload();
             Modules.Players.Ammo.Unload();
           //  Modules.Players.Build.Unload();

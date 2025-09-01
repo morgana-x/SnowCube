@@ -58,6 +58,7 @@ namespace SnowCube.Modules.Players
             {
                 Ammo.AddAmmo(p, 1);
                 Effect.EmitEffect(p.level, Effect.Effects.Snowball_Trail, new Vec3F32(x, y + 1, z));
+                Sound.EmitBlockSound(p, 0, MCGalaxy.Blocks.SoundType.Cloth, 50, 100);
             }
             
         }

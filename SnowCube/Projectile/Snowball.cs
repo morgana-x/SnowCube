@@ -1,4 +1,5 @@
 ﻿using MCGalaxy;
+using MCGalaxy.Blocks;
 using MCGalaxy.Maths;
 using SnowCube.Modules.Players;
 using SnowCube.Modules.World;
@@ -44,6 +45,7 @@ namespace SnowCube.Projectile
                 }
    
             }
+            Sound.EmitSound(Level, 0, (ushort)SoundType.Snow, BlockPos.X, BlockPos.Y, BlockPos.Z, 100, 100);
             Effect.EmitEffect(Level, Effect.Effects.Snowball_Hit, Pos + new Vec3F32(0, 1, 0));
             base.OnCollide(block, pl);
         }
