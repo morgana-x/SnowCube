@@ -1,6 +1,5 @@
 ﻿using MCGalaxy;
 using MCGalaxy.Events.PlayerEvents;
-using MCGalaxy.Maths;
 using System;
 
 namespace SnowCube.Modules.Players

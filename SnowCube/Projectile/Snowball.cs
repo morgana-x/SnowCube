@@ -2,6 +2,7 @@
 using MCGalaxy.Maths;
 using SnowCube.Modules.Players;
 using SnowCube.Modules.World;
+using static SnowCube.Events.PlayerEvents;
 namespace SnowCube.Projectile
 {
     public class Snowball : Projectile
@@ -34,8 +35,14 @@ namespace SnowCube.Projectile
         {
             if (pl != null)
             {
-                pl.Send(MCGalaxy.Network.Packet.VelocityControl(Vel.X, 2, Vel.Z, 0, 0, 0));
-                Health.Damage(pl, 1);
+                bool cancel = false;
+                PlayerHitBySnowballEvent.Call(pl, this.Thrower, ref cancel);
+                if (!cancel)
+                {
+                    pl.Send(MCGalaxy.Network.Packet.VelocityControl(Vel.X, 2, Vel.Z, 0, 0, 0));
+                    Health.Damage(pl, 1, DamageData.DamageType.Snowball, this.Thrower);
+                }
+   
             }
             Effect.EmitEffect(Level, Effect.Effects.Snowball_Hit, Pos + new Vec3F32(0, 1, 0));
             base.OnCollide(block, pl);

@@ -40,19 +40,29 @@ namespace SnowCube.Modules.Players
             SetHealth(player, newvalue);
         }
 
-        public static void Damage(MCGalaxy.Player player, int amount)
+        public static void Damage(MCGalaxy.Player player, int amount, DamageData.DamageType type, MCGalaxy.Player attacker=null)
         {
             if (Util.IsNoDamageLevel(player.level)) return;
-            AddHealth(player, -amount);
+            if (player.Game.Referee) return;
+          
+            DamageData data = new DamageData(player, attacker, type, amount);
+            Events.PlayerEvents.PlayerDamagingEvent.Call(player, ref data);
+
+            if (data.Cancel) return;
+
+            AddHealth(player, -data.Damage);
 
             if (GetHealth(player) <= 0)
-                Die(player);
+                Die(player, data);
         }
 
-        public static void Die(MCGalaxy.Player player)
+        public static void Die(MCGalaxy.Player player, DamageData damageData)
         {
             if (Util.IsNoDamageLevel(player.level)) return;
-            player.HandleDeath(4, $"@p got snowed", false, false);
+            Events.PlayerEvents.PlayerKilledEvent.Call(player, ref damageData);
+
+ 
+            player.HandleDeath(4, damageData.DeathMessage, false, false);
         }
         public static bool Dead(MCGalaxy.Player player)
         {
