@@ -102,7 +102,7 @@ namespace SnowCube.Projectile
         public Vec3U16 BlockPos { get { return Util.Round(Pos); } set { Pos.X = value.X << 5; Pos.Y = value.Y << 5; Pos.Z = value.Z << 5; } }
 
         public float Drag = 0.95f;
-        public float Gravity = 1.5f;
+        public float Gravity = 0.7f;
 
         public float Radius = 1f;
 
@@ -135,7 +135,7 @@ namespace SnowCube.Projectile
 
             Vel *= Drag;
             if (Vel.Y > -Gravity)
-                Vel.Y -= 0.25f;
+                Vel.Y -= 0.15f;
 
             for (int i = 0; i < 10; i++)
             {
@@ -149,12 +149,16 @@ namespace SnowCube.Projectile
                 var block = CollidedBlock();
                 var pl = CollidedPlayer();
 
-                if (pl != null && DateTime.Now < Creation.AddMilliseconds(150) && pl == Thrower) pl = null;
+                bool donthitself = DateTime.Now < Creation.AddMilliseconds(150);
+                if (pl != null && donthitself && pl == Thrower) pl = null;
                 if (block != 0 || pl != null)
                 {
                     if (pl != null)
                         foreach (var p in CollidedPlayers())
+                        {
+                            if (p == Thrower && donthitself) continue;
                             OnCollide(block, p);
+                        }
                     else
                         OnCollide(block, null);
                     return true;

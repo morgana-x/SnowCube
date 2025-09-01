@@ -29,14 +29,27 @@ namespace SnowCube.Modules.Players
             public DamageDataDeathMessage() { }
             static System.Random rnd = new System.Random();
 
+            public int[] lastIndex = new int[3] { 0, 0, 0 };
+            public int GetRandomNonRepeat(int i, int count)
+            {
+                if (count <= 1) return 0;
+
+                int result = 0;
+                while (result == lastIndex[i])
+                    result = rnd.Next(0, count);
+
+                lastIndex[i] = result;
+                return result;
+
+            }
             public string GetMessage(DamageData data)
             {
                 if (data.Victim == data.Attacker)
-                    return Suicide[rnd.Next(0, Suicide.Count)].Replace("@v", data.Victim.ColoredName);
+                    return Suicide[GetRandomNonRepeat(0, Suicide.Count)].Replace("@v", data.Victim.ColoredName);
                 if (data.Attacker != null)
-                    return Killed[rnd.Next(0, Killed.Count)].Replace("@v", data.Victim.ColoredName).Replace("@k", data.Attacker.ColoredName);
+                    return Killed[GetRandomNonRepeat(1, Killed.Count)].Replace("@v", data.Victim.ColoredName).Replace("@k", data.Attacker.ColoredName);
                 if (data.Victim != null)
-                    return Other[rnd.Next(0, Other.Count)].Replace("@v", data.Victim.ColoredName);
+                    return Other[GetRandomNonRepeat(2, Other.Count)].Replace("@v", data.Victim.ColoredName);
 
                 return Other[rnd.Next(0, Other.Count)].Replace("@v", "&cNULL");
             }
