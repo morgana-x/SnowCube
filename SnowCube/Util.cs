@@ -39,8 +39,13 @@ namespace SnowCube
             foreach (MCGalaxy.Player pl in level.players)
             {
                 if (IsPVPLevel(level) && Health.Dead(pl)) continue;
-                   
+
                 if ((pl.Pos.ToVec3F32() - pos).LengthSquared <= radius)
+                {
+                    result.Add(pl);
+                    continue;
+                }
+                if (((pl.Pos.ToVec3F32() - new Vec3F32(0, 0.7f, 0)) - pos).LengthSquared <= radius)
                     result.Add(pl);
             }
             return result;
@@ -53,6 +58,8 @@ namespace SnowCube
                 if (IsPVPLevel(level) && Health.Dead(pl)) continue;
 
                 if ((pl.Pos.ToVec3F32() - pos).LengthSquared <= radius)
+                    return pl;
+                if (((pl.Pos.ToVec3F32() - new Vec3F32(0, 0.7f,0)) - pos).LengthSquared <= radius)
                     return pl;
             }
             return null;
