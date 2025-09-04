@@ -38,7 +38,7 @@ namespace SnowCube.Modules.Item
         // Place snow block
         public override void OnRightClick(Player p, MouseAction action, ushort yaw, ushort pitch, byte entityid, ushort bx, ushort by, ushort bz, TargetBlockFace face)
         {
-            
+            this.OnLeftClick(p, action, yaw, pitch, entityid, bx, by, bz, face);
         }
 
         public override void OnMiddleClick(Player p, MouseAction action, ushort yaw, ushort pitch, byte entityid, ushort bx, ushort by, ushort bz, TargetBlockFace face)

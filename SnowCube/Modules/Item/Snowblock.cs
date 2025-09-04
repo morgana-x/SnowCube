@@ -11,6 +11,10 @@ namespace SnowCube.Modules.Item
         public override ushort BlockID => 36;
         public override BlockDefinition BlockDefinition => null;
 
+        public override void OnLeftClick(Player p, MouseAction action, ushort yaw, ushort pitch, byte entityid, ushort bx, ushort by, ushort bz, TargetBlockFace face)
+        {
+            this.OnRightClick(p, action, yaw, pitch, entityid, bx, by, bz, face);
+        }
         public override void OnRightClick(Player p, MouseAction action, ushort yaw, ushort pitch, byte entityid, ushort bx, ushort by, ushort bz, TargetBlockFace face)
         {
             if (action == MouseAction.Released) return;
