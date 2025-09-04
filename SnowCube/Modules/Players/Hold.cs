@@ -1,4 +1,5 @@
 ﻿using MCGalaxy;
+using MCGalaxy.Events.EntityEvents;
 using MCGalaxy.Tasks;
 using System;
 
@@ -8,11 +9,14 @@ namespace SnowCube.Modules.Players
     {
         public static void Load()
         {
-           // holdTask = MCGalaxy.Server.MainScheduler.QueueRepeat(TickPlayerHold, null, TimeSpan.FromSeconds(0.45f));
+            // holdTask = MCGalaxy.Server.MainScheduler.QueueRepeat(TickPlayerHold, null, TimeSpan.FromSeconds(0.45f));
+            OnSendingModelEvent.Register(HandleOnSendingModel, Priority.High);
+
         }
         public static void Unload()
         {
-           // MCGalaxy.Server.MainScheduler.Cancel(holdTask);
+            // MCGalaxy.Server.MainScheduler.Cancel(holdTask);
+            OnSendingModelEvent.Unregister(HandleOnSendingModel);
         }
 
        // static SchedulerTask holdTask;
@@ -49,6 +53,15 @@ namespace SnowCube.Modules.Players
                 if (player.Model == model) continue;
                 player.UpdateModel(model);
             }
+        }
+
+        static void HandleOnSendingModel(Entity e, ref string model, Player dst)
+        {
+            if (e != dst)
+                return;
+            if (!model.Contains("hold"))
+                return;
+            model = "humanoid";
         }
     }
 }
