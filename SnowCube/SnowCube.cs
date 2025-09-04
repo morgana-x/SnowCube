@@ -16,6 +16,7 @@ namespace SnowCube
             Modules.World.Effect.Load();
             Modules.World.Sound.Load();
             Modules.Players.Ammo.Load();
+            Modules.Players.Build.Load();
             Modules.Players.Loadout.Load();
             Modules.Players.Hold.Load();
             Modules.Players.Health.Load();
@@ -31,6 +32,7 @@ namespace SnowCube
             Modules.World.Effect.Unload();
             Modules.World.Sound.Unload();
             Modules.Players.Loadout.Unload();
+            Modules.Players.Build.Unload();
             Modules.Players.Ammo.Unload();
             Modules.Players.Hold.Unload();
             Modules.Players.Health.Unload();
