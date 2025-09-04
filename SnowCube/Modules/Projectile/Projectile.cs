@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SnowCube.Projectile
+namespace SnowCube.Modules.Projectile
 {
     public class Projectile
     {
@@ -71,7 +71,7 @@ namespace SnowCube.Projectile
         public static void Throw(Player p, Projectile projectile, ushort yaw, ushort pitch, float power = 2.5f)
         {
             var dir = DirUtils.GetDirVectorExt(yaw, pitch);
-            Throw(p.level, projectile, p.Pos.ToVec3F32() + (dir * 0.1f), dir * power, p);
+            Throw(p.level, projectile, p.Pos.ToVec3F32() + dir * 0.1f, dir * power, p);
         }
 
         public void Throw(Player p, ushort yaw, ushort pitch, float power = 2.5f)
@@ -139,7 +139,7 @@ namespace SnowCube.Projectile
 
             for (int i = 0; i < 10; i++)
             {
-                Pos += (Vel*0.1f *curtime);
+                Pos += Vel * 0.1f * curtime;
 
                 if (Pos.Y < 0 || Pos.X < 0 || Pos.Z < 0)
                     return true;

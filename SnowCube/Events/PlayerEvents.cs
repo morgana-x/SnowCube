@@ -8,11 +8,11 @@ namespace SnowCube.Events
 {
     public class PlayerEvents
     {
-        public delegate void PlayerThrowingSnowball(Player pl, Projectile.Projectile pr, ref bool cancel);
+        public delegate void PlayerThrowingSnowball(Player pl, Modules.Projectile.Projectile pr, ref bool cancel);
 
         public sealed class PlayerThrowingSnowballEvent : IEvent<PlayerThrowingSnowball>
         {
-            public static void Call(Player p, Projectile.Projectile pr, ref bool cancel)
+            public static void Call(Player p, Modules.Projectile.Projectile pr, ref bool cancel)
             {
                 IEvent<PlayerThrowingSnowball>[] items = handlers.Items;
                 for (int i = 0; i < items.Length; i++)

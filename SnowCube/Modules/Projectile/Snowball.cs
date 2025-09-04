@@ -4,7 +4,7 @@ using MCGalaxy.Maths;
 using SnowCube.Modules.Players;
 using SnowCube.Modules.World;
 using static SnowCube.Events.PlayerEvents;
-namespace SnowCube.Projectile
+namespace SnowCube.Modules.Projectile
 {
     public class Snowball : Projectile
     {
@@ -37,13 +37,13 @@ namespace SnowCube.Projectile
             if (pl != null)
             {
                 bool cancel = false;
-                PlayerHitBySnowballEvent.Call(pl, this.Thrower, ref cancel);
+                PlayerHitBySnowballEvent.Call(pl, Thrower, ref cancel);
                 if (!cancel)
                 {
                     pl.Send(MCGalaxy.Network.Packet.VelocityControl(Vel.X, 2, Vel.Z, 0, 0, 0));
-                    Health.Damage(pl, 1, DamageData.DamageType.Snowball, this.Thrower);
+                    Health.Damage(pl, 1, DamageData.DamageType.Snowball, Thrower);
                 }
-   
+
             }
             Sound.EmitSound(Level, 0, (ushort)SoundType.Snow, BlockPos.X, BlockPos.Y, BlockPos.Z, 100, 100);
             Effect.EmitEffect(Level, Effect.Effects.Snowball_Hit, Pos + new Vec3F32(0, 1, 0));

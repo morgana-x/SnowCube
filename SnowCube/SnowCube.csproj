@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Reference Include="MCGalaxy_">
-      <HintPath>..\..\..\..\Desktop\mcgalaxy_server_blank\MCGalaxy_.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\MCGalaxy\MCGalaxy_.dll</HintPath>
     </Reference>
   </ItemGroup>
 

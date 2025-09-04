@@ -4,6 +4,7 @@ using System;
 using MCGalaxy.Network;
 using System.Collections.Generic;
 using SnowCube.Modules.Players;
+using MCGalaxy.Events.PlayerEvents;
 namespace SnowCube
 {
     public class Util
@@ -59,7 +60,7 @@ namespace SnowCube
 
                 if ((pl.Pos.ToVec3F32() - pos).LengthSquared <= radius)
                     return pl;
-                if (((pl.Pos.ToVec3F32() - new Vec3F32(0, 0.7f,0)) - pos).LengthSquared <= radius)
+                if (((pl.Pos.ToVec3F32() - new Vec3F32(0, 0.7f, 0)) - pos).LengthSquared <= radius)
                     return pl;
             }
             return null;
@@ -95,6 +96,42 @@ namespace SnowCube
 
             if (p.Extras.Contains("spectator"))
                 p.Extras.Remove("spectator");
+        }
+
+        public static bool IsSnowblock(ushort bid)
+        {
+            return (bid == Block.White || bid == Block.Snow);
+        }
+
+        public static void TargetBlockFaceToOffset(TargetBlockFace face, out int ox, out int oy, out int oz)
+        {
+            ox = 0;
+            oy = 0;
+            oz = 0;
+            switch (face)
+            {
+                case TargetBlockFace.AwayX:
+                    ox = -1;
+                    break;
+                case TargetBlockFace.AwayY:
+                    oy = -1;
+                    break;
+                case TargetBlockFace.TowardsX:
+                    ox = 1;
+                    break;
+                case TargetBlockFace.TowardsY:
+                    oy = 1;
+                    break;
+                case TargetBlockFace.AwayZ:
+                    oz = -1;
+                    break;
+                case TargetBlockFace.TowardsZ:
+                    oz = 1;
+                    break;
+            }
+            ox = -ox;
+            oy = -oy;
+            oz = -oz;
         }
 
 

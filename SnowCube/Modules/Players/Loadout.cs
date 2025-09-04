@@ -1,6 +1,5 @@
 ﻿using MCGalaxy;
 using MCGalaxy.Network;
-using System;
 using System.Collections.Generic;
 
 namespace SnowCube.Modules.Players
@@ -11,7 +10,6 @@ namespace SnowCube.Modules.Players
         {
             MCGalaxy.Events.PlayerEvents.OnPlayerSpawningEvent.Register(OnPlayerSpawn, MCGalaxy.Priority.Normal);
         }
-
 
         public static void Unload()
         {
@@ -30,7 +28,7 @@ namespace SnowCube.Modules.Players
                 if (i > Block.CPE_MAX_BLOCK && (def == null || def.RawID > Block.MaxRaw)) continue;
 
                 var block = Block.ToRaw(i);
-                bool has = player.Game.Referee || block == (ushort)SnowCube.ItemID.Snowball;
+                bool has = player.Game.Referee || Item.Item.Items.ContainsKey(block);
                 bulk.AddRange(Packet.SetInventoryOrder(block, has ? x : (ushort)0, player.Session.hasExtBlocks));
                 if (has) x++;
             }
@@ -42,7 +40,9 @@ namespace SnowCube.Modules.Players
             {
                 SendBlockOrder(p);
                 Util.ClearHotbar(p);
-                Util.SetHotbar(p, 4, (ushort)SnowCube.ItemID.Snowball);
+                Util.SetHotbar(p, 4, (ushort)Item.Item.ItemID.Snowball);
+                Util.SetHotbar(p, 5, (ushort)Item.Item.ItemID.Shovel);
+                p.Send(Packet.HoldThis((ushort)Item.Item.ItemID.Snowball, false, p.Session.hasExtBlocks));
             }
         }
     }

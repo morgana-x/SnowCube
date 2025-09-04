@@ -8,14 +8,14 @@ namespace SnowCube.Modules.Players
     {
         public static void Load()
         {
-            holdTask = MCGalaxy.Server.MainScheduler.QueueRepeat(TickPlayerHold, null, TimeSpan.FromSeconds(0.45f));
+           // holdTask = MCGalaxy.Server.MainScheduler.QueueRepeat(TickPlayerHold, null, TimeSpan.FromSeconds(0.45f));
         }
         public static void Unload()
         {
-            MCGalaxy.Server.MainScheduler.Cancel(holdTask);
+           // MCGalaxy.Server.MainScheduler.Cancel(holdTask);
         }
 
-        static SchedulerTask holdTask;
+       // static SchedulerTask holdTask;
 
         static string GetModel(int holding)
         {
@@ -23,9 +23,13 @@ namespace SnowCube.Modules.Players
                 return "humanoid";
             return $"hold|1.{holding.ToString("D3")}";
         }
-        private static void TickPlayerHold(SchedulerTask task)
+
+        static DateTime nextTick = DateTime.Now;
+        public static void Tick()//SchedulerTask task)
         {
-            holdTask = task;
+            if (DateTime.Now < nextTick) return;
+            nextTick = DateTime.Now.AddSeconds(1);
+           // holdTask = task;
 
             foreach (var player in PlayerInfo.Online.Items)
             {
