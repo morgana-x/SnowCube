@@ -3,6 +3,7 @@ using MCGalaxy.Events.PlayerEvents;
 using SnowCube.Modules.World;
 using MCGalaxy.Maths;
 using MCGalaxy.Network;
+using SnowCube.Events;
 
 namespace SnowCube.Modules.Item
 {
@@ -24,7 +25,11 @@ namespace SnowCube.Modules.Item
 
             if (p.Extras.GetInt("snowblock") > 0) return;
 
-            
+            bool cancel = false;
+            PlayerEvents.PlayerBreakSnowEvent.Call(p, bx, by, bz, ref cancel);
+            if (cancel) return;
+
+
             Effect.EmitEffect(p.level, Effect.Effects.Snow_Place, new Vec3F32(bx, by + 1, bz));
             Sound.EmitBlockSound(p, 0, MCGalaxy.Blocks.SoundType.Cloth, 50, 100);
 

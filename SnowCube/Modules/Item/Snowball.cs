@@ -5,6 +5,7 @@ using SnowCube.Events;
 using SnowCube.Modules.Players;
 using SnowCube.Modules.World;
 using MCGalaxy.Maths;
+using SnowCube.Modules.Projectile;
 
 namespace SnowCube.Modules.Item
 {
@@ -46,6 +47,10 @@ namespace SnowCube.Modules.Item
 
             var b = p.level.GetBlock(bx, by, bz);
             if (!Util.IsSnowblock(b)) return;
+
+            bool cancel = false;
+            PlayerEvents.PlayerPickingUpSnowEvent.Call(p, new Vec3U16(bx, by, bz), ref cancel);
+            if (cancel) return;
 
             Ammo.AddAmmo(p, 1);
             Effect.EmitEffect(p.level, Effect.Effects.Snowball_Trail, new Vec3F32(bx, by + 1, bz));

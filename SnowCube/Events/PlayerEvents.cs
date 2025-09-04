@@ -83,5 +83,35 @@ namespace SnowCube.Events
                 }
             }
         }
+
+        public delegate void PlayerBreakSnow(Player player, ushort x, ushort y, ushort z, ref bool cancel);
+
+        public sealed class PlayerBreakSnowEvent : IEvent<PlayerBreakSnow>
+        {
+            public static void Call(Player player, ushort x, ushort y, ushort z, ref bool cancel)
+            {
+                IEvent<PlayerBreakSnow>[] items = handlers.Items;
+                for (int i = 0; i < items.Length; i++)
+                {
+                    try { items[i].method(player, x, y, z, ref cancel); }
+                    catch (Exception ex) { LogHandlerException(ex, items[i]); }
+                }
+            }
+        }
+
+        public delegate void PlayerPlaceSnow(Player player, ushort x, ushort y, ushort z, ref bool cancel);
+
+        public sealed class PlayerPlaceSnowEvent : IEvent<PlayerPlaceSnow>
+        {
+            public static void Call(Player player, ushort x, ushort y, ushort z, ref bool cancel)
+            {
+                IEvent<PlayerPlaceSnow>[] items = handlers.Items;
+                for (int i = 0; i < items.Length; i++)
+                {
+                    try { items[i].method(player, x, y, z, ref cancel); }
+                    catch (Exception ex) { LogHandlerException(ex, items[i]); }
+                }
+            }
+        }
     }
 }

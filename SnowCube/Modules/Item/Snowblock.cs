@@ -2,6 +2,7 @@
 using MCGalaxy.Events.PlayerEvents;
 using MCGalaxy.Maths;
 using MCGalaxy.Network;
+using SnowCube.Events;
 using SnowCube.Modules.World;
 
 namespace SnowCube.Modules.Item
@@ -33,6 +34,9 @@ namespace SnowCube.Modules.Item
             var b = p.level.GetBlock(bx, by, bz);
             if (b != 0) return;
 
+            bool cancel = false;
+            PlayerEvents.PlayerPlaceSnowEvent.Call(p, bx, by, bz, ref cancel);
+            if (cancel) return;
 
             // Release force hold shovel thing
             p.Send(Packet.HoldThis((ushort)Item.ItemID.Shovel, false, p.Session.hasExtBlocks));
